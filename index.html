@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Omar.services</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Cairo,sans-serif;background:#f5f7fa;color:#1a1a2e;overflow-x:hidden}
+.page{display:none;min-height:100vh;flex-direction:column;max-width:420px;margin:0 auto}
+.page.on{display:flex}
+
+/* SPLASH */
+#p0{background:linear-gradient(145deg,#1a1a2e,#0f3460);align-items:center;justify-content:center;text-align:center}
+.logo{width:88px;height:88px;background:linear-gradient(135deg,#00c896,#00a876);border-radius:26px;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 18px;box-shadow:0 16px 50px rgba(0,200,150,.4)}
+#p0 h1{font-size:34px;font-weight:900;color:#fff;margin-bottom:6px}
+#p0 .sub{color:rgba(255,255,255,.6);font-size:13px;margin-bottom:50px}
+.sbtn{background:linear-gradient(135deg,#00c896,#00a876);color:#fff;border:none;padding:16px 56px;border-radius:50px;font-family:Cairo,sans-serif;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 10px 28px rgba(0,200,150,.4)}
+.sct{color:rgba(255,255,255,.25);font-size:11px;margin-top:20px}
+
+/* HEADER */
+.hdr{background:linear-gradient(145deg,#1a1a2e,#16213e);padding:46px 18px 28px;position:relative}
+.hdr::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:28px;background:#f5f7fa;border-radius:28px 28px 0 0}
+.hdr-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.loc{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.12);padding:7px 13px;border-radius:50px;color:#fff;font-size:12px;font-weight:700}
+.hdr h2{color:#fff;font-size:20px;font-weight:800;margin-bottom:3px}
+.hdr p{color:rgba(255,255,255,.55);font-size:12px}
+.hdr-srch{margin:14px 0 0;background:rgba(255,255,255,.12);border-radius:12px;display:flex;align-items:center;gap:8px;padding:11px 14px}
+.hdr-srch input{background:none;border:none;outline:none;color:#fff;font-family:Cairo,sans-serif;font-size:13px;flex:1;text-align:right}
+.hdr-srch input::placeholder{color:rgba(255,255,255,.35)}
+
+/* CONTENT */
+.body{flex:1;overflow-y:auto;padding-bottom:85px}
+.sec{padding:20px 18px 0}
+.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sh h3{font-size:15px;font-weight:800}
+.sh span{color:#00c896;font-size:12px;font-weight:700;cursor:pointer}
+
+/* PROMO */
+.promo-w{padding:18px 18px 0}
+.promo{background:linear-gradient(135deg,#ff6b35,#e03000);border-radius:18px;padding:20px;display:flex;align-items:center;justify-content:space-between;overflow:hidden;position:relative}
+.promo::before{content:'';position:absolute;width:120px;height:120px;background:rgba(255,255,255,.07);border-radius:50%;top:-40px;left:-20px}
+.promo h3{color:#fff;font-size:16px;font-weight:800;margin-bottom:4px}
+.promo p{color:rgba(255,255,255,.85);font-size:12px}
+.badge{background:#fff;color:#ff6b35;font-weight:900;font-size:18px;width:60px;height:60px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;line-height:1}
+.badge small{font-size:9px;font-weight:800}
+
+/* SERVICES */
+.svc-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.svc{background:#fff;border-radius:12px;padding:12px 6px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;box-shadow:0 3px 14px rgba(26,26,46,.07);border:2px solid transparent;transition:all .2s}
+.svc:active{border-color:#00c896;transform:scale(.96)}
+.svc-i{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:21px}
+.svc span{font-size:10px;font-weight:700;text-align:center}
+
+/* RIDE OPTIONS */
+.ride-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}
+.ride-row::-webkit-scrollbar{display:none}
+.ride-opt{min-width:120px;background:#fff;border-radius:12px;padding:13px;cursor:pointer;box-shadow:0 3px 14px rgba(26,26,46,.07);border:2px solid transparent;flex-shrink:0;transition:all .2s}
+.ride-opt.sel{border-color:#00c896;background:rgba(0,200,150,.05)}
+.ride-opt:active{transform:scale(.97)}
+.ride-opt .ico{font-size:28px;margin-bottom:5px}
+.ride-opt h4{font-size:11px;font-weight:800;margin-bottom:2px}
+.ride-opt p{font-size:10px;color:#8a93a8}
+.ride-opt .price{margin-top:5px;font-size:11px;font-weight:700;color:#00c896}
+
+/* RESTAURANTS */
+.rest-list{display:flex;flex-direction:column;gap:10px}
+.rest{background:#fff;border-radius:16px;display:flex;overflow:hidden;box-shadow:0 3px 14px rgba(26,26,46,.07);cursor:pointer;transition:all .2s}
+.rest:active{transform:scale(.98)}
+.rest-img{width:84px;height:84px;display:flex;align-items:center;justify-content:center;font-size:38px;background:#f5f7fa;flex-shrink:0}
+.rest-info{padding:12px;flex:1}
+.rest-info h4{font-size:13px;font-weight:800;margin-bottom:4px}
+.rest-meta{display:flex;align-items:center;gap:5px;font-size:10px;color:#8a93a8;flex-wrap:wrap}
+.tag{background:rgba(0,200,150,.12);color:#00a876;padding:1px 7px;border-radius:20px;font-size:9px;font-weight:700}
+.star{color:#f5a623;font-size:10px;font-weight:700}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;background:#fff;display:flex;padding:9px 0 18px;box-shadow:0 -3px 20px rgba(26,26,46,.09);border-radius:22px 22px 0 0;z-index:99}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.ni .ic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px;transition:all .25s}
+.ni.on .ic{background:linear-gradient(135deg,#00c896,#00a876);transform:scale(1.1) translateY(-4px);box-shadow:0 5px 18px rgba(0,200,150,.4)}
+.ni span{font-size:9px;font-weight:700;color:#8a93a8}
+.ni.on span{color:#00c896}
+
+/* MAP */
+.map{height:46vh;background:linear-gradient(145deg,#e8f5e9,#e3f2fd);position:relative;overflow:hidden}
+.map-g{position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.05) 1px,transparent 1px);background-size:38px 38px}
+.road-h{position:absolute;height:7px;background:#fff;opacity:.75;left:0;right:0;border-radius:4px}
+.road-v{position:absolute;width:7px;background:#fff;opacity:.75;top:0;bottom:0;border-radius:4px}
+.car{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);font-size:30px;animation:cmv 3s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3))}
+@keyframes cmv{0%,100%{transform:translate(-50%,-50%) rotate(-5deg)}50%{transform:translate(-40%,-55%) rotate(5deg)}}
+.pin{position:absolute;bottom:33%;left:33%;font-size:26px;animation:pnb 1.5s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3))}
+@keyframes pnb{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.back-btn{position:absolute;top:52px;right:16px;width:42px;height:42px;background:#fff;border:none;border-radius:50%;font-size:19px;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.13);display:flex;align-items:center;justify-content:center;z-index:5}
+
+/* PANEL */
+.panel{background:#fff;border-radius:22px 22px 0 0;margin-top:-18px;padding:18px;flex:1;overflow-y:auto}
+.panel h3{font-size:16px;font-weight:800;margin-bottom:3px}
+.panel .sub{color:#8a93a8;font-size:11px;margin-bottom:2px}
+
+/* FORM */
+.form{background:#f5f7fa;border-radius:13px;padding:13px;margin:11px 0}
+.form label{font-size:11px;font-weight:700;color:#8a93a8;display:block;margin-bottom:4px}
+.form input,.form select{width:100%;background:#fff;border:1.5px solid #e8edf5;border-radius:9px;padding:9px 11px;font-family:Cairo,sans-serif;font-size:12px;color:#1a1a2e;outline:none;margin-bottom:9px;text-align:right}
+.form input:focus,.form select:focus{border-color:#00c896}
+.form input:last-child,.form select:last-child{margin-bottom:0}
+
+/* PAY ROW */
+.pay-r{display:flex;gap:7px;margin-bottom:12px}
+.pay-o{flex:1;background:#fff;border-radius:9px;padding:9px 5px;text-align:center;font-size:10px;font-weight:700;border:2px solid #e8edf5;cursor:pointer;line-height:1.7}
+.pay-o.sel{border-color:#00c896;background:rgba(0,200,150,.06);color:#00a876}
+
+/* BUTTONS */
+.btn-g{width:100%;background:linear-gradient(135deg,#00c896,#00a876);color:#fff;border:none;padding:15px;border-radius:14px;font-family:Cairo,sans-serif;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 7px 22px rgba(0,200,150,.32);margin-top:7px}
+.btn-g:disabled{opacity:.6;cursor:not-allowed}
+.btn-w{width:100%;background:none;border:2px solid #e8edf5;color:#1a1a2e;padding:12px;border-radius:13px;font-family:Cairo,sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-top:9px}
+
+/* ORDER PREVIEW */
+.oprev{display:flex;align-items:center;gap:13px;background:#f5f7fa;border-radius:13px;padding:13px;margin-bottom:13px}
+.oprev .oe{font-size:42px}
+.oprev h4{font-size:14px;font-weight:800;margin-bottom:3px}
+.oprev p{font-size:11px;color:#8a93a8}
+.oprev .op{color:#00c896;font-weight:900;font-size:16px;margin-top:3px}
+
+/* MODAL */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.58);z-index:200;align-items:flex-end;justify-content:center}
+.modal.on{display:flex}
+.mpanel{background:#fff;border-radius:22px 22px 0 0;padding:18px 18px 36px;width:100%;max-width:420px;animation:sup .35s ease;max-height:91vh;overflow-y:auto}
+@keyframes sup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mbar{width:38px;height:4px;background:#e8edf5;border-radius:2px;margin:0 auto 16px}
+.drv{display:flex;align-items:center;gap:13px;background:#f5f7fa;border-radius:13px;padding:13px;margin-bottom:12px}
+.drv-av{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;font-size:23px}
+.drv-info h4{font-size:13px;font-weight:800;margin-bottom:2px}
+.drv-star{color:#f5a623;font-weight:800;font-size:11px}
+.dplate{margin-right:auto;background:#1a1a2e;color:#fff;padding:5px 10px;border-radius:7px;font-size:12px;font-weight:800;letter-spacing:2px}
+.eta{display:flex;align-items:center;justify-content:space-between;background:rgba(0,200,150,.08);border-radius:11px;padding:13px 15px;margin-bottom:12px;border:1px solid rgba(0,200,150,.18)}
+
+/* NOTIF */
+.nbox{margin:9px 0}
+.nrow{display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:9px;font-size:11px;font-weight:700;margin-bottom:5px}
+.nrow.snd{background:rgba(123,94,167,.07);color:#7b5ea7;border:1px solid rgba(123,94,167,.18)}
+.nrow.ok{background:rgba(0,200,150,.07);color:#00a876;border:1px solid rgba(0,200,150,.18)}
+.nrow.fail{background:rgba(255,107,53,.07);color:#ff6b35;border:1px solid rgba(255,107,53,.18)}
+
+/* DOTS */
+.dots{display:flex;gap:5px;justify-content:center;padding:14px}
+.dot{width:8px;height:8px;border-radius:50%;background:#00c896;animation:ldot 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s;background:#7b5ea7}
+.dot:nth-child(3){animation-delay:.4s;background:#ff6b35}
+@keyframes ldot{0%,80%,100%{transform:scale(0)}40%{transform:scale(1)}}
+
+/* TOAST */
+.toast{position:fixed;bottom:95px;left:50%;transform:translateX(-50%) translateY(18px);background:#1a1a2e;color:#fff;padding:11px 22px;border-radius:50px;font-size:12px;font-weight:700;opacity:0;transition:all .28s;z-index:300;white-space:nowrap;max-width:88%;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.ok{background:linear-gradient(135deg,#00c896,#00a876)}
+.toast.err{background:linear-gradient(135deg,#ff6b35,#e03000)}
+
+/* GROCERY */
+.groc-g{display:grid;grid-template-columns:repeat(2,1fr);gap:11px}
+.groc-c{background:#fff;border-radius:14px;padding:13px;box-shadow:0 3px 14px rgba(26,26,46,.07);cursor:pointer;text-align:center;transition:all .2s}
+.groc-c:active{transform:scale(.97)}
+.groc-c .gi{font-size:36px;margin-bottom:6px}
+.groc-c h4{font-size:11px;font-weight:700;margin-bottom:2px}
+.groc-c p{font-size:10px;color:#8a93a8;margin-bottom:6px}
+.groc-c .gp{color:#00c896;font-weight:800;font-size:12px}
+.add-btn{width:28px;height:28px;background:#00c896;color:#fff;border:none;border-radius:7px;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;margin:6px auto 0}
+
+/* WALLET */
+.wal-h{background:linear-gradient(135deg,#7b5ea7,#6b46c1);padding:46px 18px 38px;position:relative}
+.wal-h::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:28px;background:#f5f7fa;border-radius:28px 28px 0 0}
+.wal-bal{text-align:center;color:#fff}
+.wal-bal p{font-size:13px;opacity:.75;margin-bottom:6px}
+.wal-bal h2{font-size:42px;font-weight:900;margin-bottom:3px}
+.wal-bal small{font-size:13px;opacity:.65}
+.wal-acts{display:flex;gap:9px;padding:18px}
+.wact{flex:1;background:#fff;border:none;border-radius:13px;padding:13px 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;box-shadow:0 3px 14px rgba(26,26,46,.07);font-family:Cairo,sans-serif}
+.wic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.wact span{font-size:10px;font-weight:700;color:#1a1a2e}
+.tx-list{padding:0 18px}
+.tx{background:#fff;border-radius:13px;padding:13px 15px;display:flex;align-items:center;gap:11px;margin-bottom:9px;box-shadow:0 3px 14px rgba(26,26,46,.07)}
+.txic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.txi{flex:1}
+.txi h4{font-size:12px;font-weight:700;margin-bottom:2px}
+.txi p{font-size:10px;color:#8a93a8}
+.txa{font-size:13px;font-weight:800}
+.txa.d{color:#ff6b35}
+.txa.c{color:#00c896}
+
+/* PROFILE */
+.pro-h{background:linear-gradient(145deg,#1a1a2e,#16213e);padding:46px 18px 38px;text-align:center;position:relative}
+.pro-h::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:28px;background:#f5f7fa;border-radius:28px 28px 0 0}
+.av{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,#00c896,#00a876);display:flex;align-items:center;justify-content:center;font-size:34px;margin:0 auto 13px;box-shadow:0 7px 22px rgba(0,200,150,.38);border:3px solid rgba(255,255,255,.18)}
+.pro-h h2{color:#fff;font-size:19px;font-weight:800;margin-bottom:3px}
+.pro-h p{color:rgba(255,255,255,.55);font-size:12px}
+.pro-stats{display:flex;gap:1px;background:rgba(255,255,255,.08);border-radius:13px;margin-top:16px;overflow:hidden}
+.pst{flex:1;text-align:center;padding:11px 7px;background:rgba(255,255,255,.04)}
+.pst h3{color:#00c896;font-size:19px;font-weight:900}
+.pst p{color:rgba(255,255,255,.55);font-size:10px;margin-top:2px}
+.m-list{padding:18px}
+.mi{background:#fff;border-radius:13px;padding:13px;margin-bottom:9px;display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 3px 14px rgba(26,26,46,.07);transition:all .2s}
+.mi:active{transform:translateX(-3px)}
+.mic{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:19px}
+.mii{flex:1}
+.mii h4{font-size:12px;font-weight:700;margin-bottom:2px}
+.mii p{font-size:10px;color:#8a93a8}
+.ctcard{background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;padding:16px;margin-bottom:9px}
+.ctlink{display:flex;align-items:center;gap:11px;border-radius:11px;padding:11px 13px;text-decoration:none;margin-bottom:7px;border:1px solid transparent}
+.ctlink:last-child{margin-bottom:0}
+.ctlico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.ctlb{flex:1}
+.ctlb strong{display:block;color:#fff;font-size:12px;font-weight:700}
+.ctlb small{color:rgba(255,255,255,.45);font-size:10px}
+
+.sbar{height:42px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;font-weight:700;color:rgba(255,255,255,.85)}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="p0" class="page on">
+  <div class="logo">&#128640;</div>
+  <h1>Omar.services</h1>
+  <p class="sub">&#x062A;&#x0646;&#x0642;&#x0644; &bull; &#x0637;&#x0639;&#x0627;&#x0645; &bull; &#x062A;&#x0633;&#x0648;&#x0642; &bull; &#x062F;&#x0641;&#x0639;</p>
+  <button class="sbtn" id="s0">&#x0627;&#x0628;&#x062F;&#x0623; &#x0627;&#x0644;&#x0622;&#x0646;</button>
+  <p class="sct">&#x1F4DE; 0676290488 &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="93fcfef2e1e7f7f5aaa6a2d3f4fef2faffbdf0fcfe">[email&#160;protected]</a></p>
+</div>
+
+<!-- HOME -->
+<div id="p1" class="page">
+  <div class="sbar" style="background:linear-gradient(145deg,#1a1a2e,#16213e)"><span>9:41</span><span>&#x1F4F6; &#x1F50B;</span></div>
+  <div class="hdr" style="padding-top:8px">
+    <div class="hdr-row">
+      <div class="loc"><span>&#x1F4CD;</span><span>&#x0627;&#x0644;&#x062C;&#x0632;&#x0627;&#x0626;&#x0631;</span></div>
+      <span style="color:#fff;font-size:20px">&#x1F514;</span>
+    </div>
+    <h2>&#x0645;&#x0631;&#x062D;&#x0628;&#x064B;&#x0627;&#x060C; &#x0639;&#x0645;&#x0631; &#x1F44B;</h2>
+    <p>&#x0625;&#x0644;&#x0649; &#x0623;&#x064A;&#x0646; &#x062A;&#x0631;&#x064A;&#x062F; &#x0627;&#x0644;&#x0630;&#x0647;&#x0627;&#x0628;&#x061F;</p>
+    <div class="hdr-srch"><span>&#x1F50D;</span><input type="text" placeholder="&#x0627;&#x0628;&#x062D;&#x062B;..."></div>
+  </div>
+  <div class="body">
+    <div class="promo-w">
+      <div class="promo"><div><h3>&#x062E;&#x0635;&#x0645; &#x062E;&#x0627;&#x0635;&#x0021;</h3><p>&#x0623;&#x0648;&#x0644; &#x062A;&#x0648;&#x0635;&#x064A;&#x0644; &#x0628;&#x0646;&#x0635;&#x0641; &#x0627;&#x0644;&#x0633;&#x0639;&#x0631;</p></div><div class="badge">50%<small>&#x062E;&#x0635;&#x0645;</small></div></div>
+    </div>
+    <div class="sec">
+      <div class="sh"><h3>&#x062E;&#x062F;&#x0645;&#x0627;&#x062A;&#x0646;&#x0627;</h3></div>
+      <div class="svc-g">
+        <div class="svc" id="h-ride"><div class="svc-i" style="background:rgba(0,200,150,.12)">&#x1F697;</div><span>&#x062A;&#x0648;&#x0635;&#x064A;&#x0644;</span></div>
+        <div class="svc" id="h-food"><div class="svc-i" style="background:rgba(255,107,53,.12)">&#x1F354;</div><span>&#x0637;&#x0639;&#x0627;&#x0645;</span></div>
+        <div class="svc" id="h-groc"><div class="svc-i" style="background:rgba(123,94,167,.12)">&#x1F6D2;</div><span>&#x0628;&#x0642;&#x0627;&#x0644;&#x0629;</span></div>
+        <div class="svc" id="h-wal"><div class="svc-i" style="background:rgba(245,166,35,.12)">&#x1F4B3;</div><span>&#x062F;&#x0641;&#x0639;</span></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sh"><h3>&#x062E;&#x064A;&#x0627;&#x0631;&#x0627;&#x062A; &#x0627;&#x0644;&#x062A;&#x0646;&#x0642;&#x0644;</h3><span id="h-ride2">&#x0627;&#x062D;&#x062C;&#x0632;</span></div>
+      <div class="ride-row">
+        <div class="ride-opt sel" data-t="&#x0643;&#x0644;&#x0627;&#x0633;&#x064A;&#x0643;" data-p="200"><div class="ico">&#x1F697;</div><h4>&#x0643;&#x0644;&#x0627;&#x0633;&#x064A;&#x0643;</h4><p>&#x0645;&#x0631;&#x064A;&#x062D;</p><div class="price">200 &#x062F;.&#x062C;</div></div>
+        <div class="ride-opt" data-t="&#x0643;&#x0648;&#x0645;&#x0641;&#x0648;&#x0631;&#x062A;" data-p="350"><div class="ico">&#x1F699;</div><h4>&#x0643;&#x0648;&#x0645;&#x0641;&#x0648;&#x0631;&#x062A;</h4><p>&#x0641;&#x0627;&#x062E;&#x0631;</p><div class="price">350 &#x062F;.&#x062C;</div></div>
+        <div class="ride-opt" data-t="&#x0633;&#x0628;&#x064A;&#x0633;" data-p="450"><div class="ico">&#x1F690;</div><h4>&#x0633;&#x0628;&#x064A;&#x0633;</h4><p>7 &#x0623;&#x0634;&#x062E;&#x0627;&#x0635;</p><div class="price">450 &#x062F;.&#x062C;</div></div>
+        <div class="ride-opt" data-t="&#x0628;&#x0631;&#x064A;&#x0645;&#x064A;&#x0648;&#x0645;" data-p="600"><div class="ico">&#x1F48E;</div><h4>&#x0628;&#x0631;&#x064A;&#x0645;&#x064A;&#x0648;&#x0645;</h4><p>&#x062F;&#x0631;&#x062C;&#x0629; 1</p><div class="price">600 &#x062F;.&#x062C;</div></div>
+      </div>
+    </div>
+    <div class="sec">
+      <div class="sh"><h3>&#x0645;&#x0637;&#x0627;&#x0639;&#x0645; &#x0634;&#x0647;&#x064A;&#x0631;&#x0629;</h3><span id="h-food2">&#x0627;&#x0644;&#x0643;&#x0644;</span></div>
+      <div class="rest-list">
+        <div class="rest food-card" data-r="&#x0628;&#x064A;&#x062A;&#x0632;&#x0627; &#x0647;&#x0627;&#x0648;&#x0633;" data-e="&#x1F355;" data-p="850" data-d="&#x0628;&#x064A;&#x062A;&#x0632;&#x0627; &#x0625;&#x064A;&#x0637;&#x0627;&#x0644;&#x064A;&#x0629;" data-t="20-30"><div class="rest-img">&#x1F355;</div><div class="rest-info"><h4>&#x0628;&#x064A;&#x062A;&#x0632;&#x0627; &#x0647;&#x0627;&#x0648;&#x0633;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.8</span><span>20-30 &#x062F;&#x0642;</span><span class="tag">&#x0645;&#x062C;&#x0627;&#x0646;&#x064A;</span></div></div></div>
+        <div class="rest food-card" data-r="&#x0628;&#x0631;&#x063A;&#x0631; &#x0641;&#x0627;&#x0643;&#x062A;&#x0648;&#x0631;&#x064A;" data-e="&#x1F354;" data-p="650" data-d="&#x0628;&#x0631;&#x063A;&#x0631; + &#x0628;&#x0637;&#x0627;&#x0637;&#x0633;" data-t="15-25"><div class="rest-img">&#x1F354;</div><div class="rest-info"><h4>&#x0628;&#x0631;&#x063A;&#x0631; &#x0641;&#x0627;&#x0643;&#x062A;&#x0648;&#x0631;&#x064A;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.6</span><span>15-25 &#x062F;&#x0642;</span><span class="tag">50 &#x062F;.&#x062C;</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <nav class="bnav">
+    <div class="ni on" id="n0"><div class="ic">&#x1F3E0;</div><span>&#x0627;&#x0644;&#x0631;&#x0626;&#x064A;&#x0633;&#x064A;&#x0629;</span></div>
+    <div class="ni" id="n1"><div class="ic">&#x1F697;</div><span>&#x062A;&#x0648;&#x0635;&#x064A;&#x0644;</span></div>
+    <div class="ni" id="n2"><div class="ic">&#x1F354;</div><span>&#x0637;&#x0639;&#x0627;&#x0645;</span></div>
+    <div class="ni" id="n3"><div class="ic">&#x1F4B3;</div><span>&#x0645;&#x062D;&#x0641;&#x0638;&#x0629;</span></div>
+    <div class="ni" id="n4"><div class="ic">&#x1F464;</div><span>&#x062D;&#x0633;&#x0627;&#x0628;&#x064A;</span></div>
+  </nav>
+</div>
+
+<!-- RIDE -->
+<div id="p2" class="page">
+  <div class="map">
+    <div class="map-g"></div>
+    <div style="position:absolute;inset:0"><div class="road-h" style="top:28%"></div><div class="road-h" style="top:54%"></div><div class="road-h" style="top:74%"></div><div class="road-v" style="left:24%"></div><div class="road-v" style="left:54%"></div><div class="road-v" style="left:74%"></div></div>
+    <div class="car">&#x1F697;</div><div class="pin">&#x1F4CD;</div>
+    <button class="back-btn" id="b2">&#x2190;</button>
+  </div>
+  <div class="panel">
+    <h3>&#x0627;&#x062D;&#x062C;&#x0632; &#x0631;&#x062D;&#x0644;&#x062A;&#x0643; &#x1F697;</h3>
+    <p class="sub">&#x0623;&#x062F;&#x062E;&#x0644; &#x0628;&#x064A;&#x0627;&#x0646;&#x0627;&#x062A;&#x0643; &mdash; &#x0633;&#x062A;&#x0635;&#x0644;&#x0646;&#x064A; &#x0625;&#x0634;&#x0639;&#x0627;&#x0631; &#x0641;&#x0648;&#x0631;&#x064A;</p>
+    <div class="form">
+      <label>&#x1F464; &#x0627;&#x0633;&#x0645; &#x0627;&#x0644;&#x0639;&#x0645;&#x064A;&#x0644;</label><input id="rn" placeholder="&#x0645;&#x062D;&#x0645;&#x062F; &#x0623;&#x0645;&#x064A;&#x0646;">
+      <label>&#x1F4F1; &#x0631;&#x0642;&#x0645; &#x0647;&#x0627;&#x062A;&#x0641;&#x0647;</label><input id="rp" type="tel" placeholder="0661234567">
+      <label>&#x1F4CD; &#x0646;&#x0642;&#x0637;&#x0629; &#x0627;&#x0644;&#x0627;&#x0646;&#x0637;&#x0644;&#x0627;&#x0642;</label><input id="rf" placeholder="&#x062D;&#x0633;&#x064A;&#x0646; &#x062F;&#x0627;&#x064A;">
+      <label>&#x1F3C1; &#x0627;&#x0644;&#x0648;&#x062C;&#x0647;&#x0629;</label><input id="rt" placeholder="&#x0628;&#x0627;&#x0628; &#x0627;&#x0644;&#x0632;&#x0648;&#x0627;&#x0631;">
+    </div>
+    <div class="sh" style="margin-bottom:9px"><h3 style="font-size:13px">&#x0646;&#x0648;&#x0639; &#x0627;&#x0644;&#x0633;&#x064A;&#x0627;&#x0631;&#x0629;</h3></div>
+    <div class="ride-row" id="rt-g" style="margin-bottom:12px">
+      <div class="ride-opt sel" data-t="&#x0643;&#x0644;&#x0627;&#x0633;&#x064A;&#x0643;" data-p="200"><div class="ico">&#x1F697;</div><h4>&#x0643;&#x0644;&#x0627;&#x0633;&#x064A;&#x0643;</h4><p>4 &#x0645;&#x0642;&#x0627;&#x0639;&#x062F;</p><div class="price">200 &#x062F;.&#x062C;</div></div>
+      <div class="ride-opt" data-t="&#x0643;&#x0648;&#x0645;&#x0641;&#x0648;&#x0631;&#x062A;" data-p="350"><div class="ico">&#x1F699;</div><h4>&#x0643;&#x0648;&#x0645;&#x0641;&#x0648;&#x0631;&#x062A;</h4><p>4 &#x0645;&#x0642;&#x0627;&#x0639;&#x062F;</p><div class="price">350 &#x062F;.&#x062C;</div></div>
+      <div class="ride-opt" data-t="&#x0633;&#x0628;&#x064A;&#x0633;" data-p="450"><div class="ico">&#x1F690;</div><h4>&#x0633;&#x0628;&#x064A;&#x0633;</h4><p>7 &#x0645;&#x0642;&#x0627;&#x0639;&#x062F;</p><div class="price">450 &#x062F;.&#x062C;</div></div>
+      <div class="ride-opt" data-t="&#x0628;&#x0631;&#x064A;&#x0645;&#x064A;&#x0648;&#x0645;" data-p="600"><div class="ico">&#x1F48E;</div><h4>&#x0628;&#x0631;&#x064A;&#x0645;&#x064A;&#x0648;&#x0645;</h4><p>&#x0641;&#x0627;&#x062E;&#x0631;</p><div class="price">600 &#x062F;.&#x062C;</div></div>
+    </div>
+    <div class="sh" style="margin-bottom:9px"><h3 style="font-size:13px">&#x0637;&#x0631;&#x064A;&#x0642;&#x0629; &#x0627;&#x0644;&#x062F;&#x0641;&#x0639;</h3></div>
+    <div class="pay-r" id="py-g">
+      <div class="pay-o sel" data-v="&#x0646;&#x0642;&#x062F;&#x064B;&#x0627;">&#x1F4B5;<br>&#x0646;&#x0642;&#x062F;&#x064B;&#x0627;</div>
+      <div class="pay-o" data-v="&#x0645;&#x062D;&#x0641;&#x0638;&#x0629;">&#x1F4F1;<br>&#x0645;&#x062D;&#x0641;&#x0638;&#x0629;</div>
+      <div class="pay-o" data-v="&#x0628;&#x0637;&#x0627;&#x0642;&#x0629;">&#x1F4B3;<br>&#x0628;&#x0637;&#x0627;&#x0642;&#x0629;</div>
+    </div>
+    <button class="btn-g" id="ride-go">&#x1F680; &#x0627;&#x062D;&#x062C;&#x0632; &#x0627;&#x0644;&#x0622;&#x0646;</button>
+  </div>
+</div>
+
+<!-- FOOD -->
+<div id="p3" class="page">
+  <div class="sbar" style="background:linear-gradient(135deg,#ff6b35,#e03000)"><span>9:41</span><span>&#x1F4F6;</span></div>
+  <div style="background:linear-gradient(135deg,#ff6b35,#e03000);padding:8px 18px 33px;position:relative">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <button id="b3" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer">&#x2190;</button>
+      <h2 style="color:#fff;font-size:17px;font-weight:800;margin:0">Omar Express &#x1F354;</h2>
+      <div style="width:34px"></div>
+    </div>
+    <p style="color:rgba(255,255,255,.8);font-size:12px;margin-bottom:12px">+500 &#x0645;&#x0637;&#x0639;&#x0645; &#x0641;&#x064A; &#x0645;&#x062F;&#x064A;&#x0646;&#x062A;&#x0643;</p>
+    <div style="position:absolute;bottom:-1px;left:0;right:0;height:28px;background:#f5f7fa;border-radius:28px 28px 0 0"></div>
+  </div>
+  <div class="sec" style="padding-top:14px">
+    <div class="sh"><h3>&#x0627;&#x0644;&#x0623;&#x0643;&#x062B;&#x0631; &#x0637;&#x0644;&#x0628;&#x064B;&#x0627; &#x1F525;</h3></div>
+    <div class="rest-list">
+      <div class="rest food-card" data-r="&#x0628;&#x064A;&#x062A;&#x0632;&#x0627; &#x0647;&#x0627;&#x0648;&#x0633;" data-e="&#x1F355;" data-p="850" data-d="&#x0628;&#x064A;&#x062A;&#x0632;&#x0627; &#x0625;&#x064A;&#x0637;&#x0627;&#x0644;&#x064A;&#x0629; &#x0643;&#x0628;&#x064A;&#x0631;&#x0629;" data-t="20-30"><div class="rest-img">&#x1F355;</div><div class="rest-info"><h4>&#x0628;&#x064A;&#x062A;&#x0632;&#x0627; &#x0647;&#x0627;&#x0648;&#x0633;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.8</span><span>20-30 &#x062F;&#x0642;</span><span class="tag">&#x0645;&#x062C;&#x0627;&#x0646;&#x064A;</span></div></div></div>
+      <div class="rest food-card" data-r="&#x0628;&#x0631;&#x063A;&#x0631; &#x0641;&#x0627;&#x0643;&#x062A;&#x0648;&#x0631;&#x064A;" data-e="&#x1F354;" data-p="650" data-d="&#x0628;&#x0631;&#x063A;&#x0631; + &#x0628;&#x0637;&#x0627;&#x0637;&#x0633;" data-t="15-25"><div class="rest-img">&#x1F354;</div><div class="rest-info"><h4>&#x0628;&#x0631;&#x063A;&#x0631; &#x0641;&#x0627;&#x0643;&#x062A;&#x0648;&#x0631;&#x064A;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.7</span><span>15-25 &#x062F;&#x0642;</span><span class="tag">50 &#x062F;.&#x062C;</span></div></div></div>
+      <div class="rest food-card" data-r="&#x062A;&#x0627;&#x0643;&#x0648; &#x062A;&#x0627;&#x064A;&#x0645;" data-e="&#x1F32E;" data-p="480" data-d="&#x062A;&#x0627;&#x0643;&#x0648; &#x062F;&#x062C;&#x0627;&#x062C; + &#x0635;&#x0644;&#x0635;&#x0629;" data-t="25-35"><div class="rest-img">&#x1F32E;</div><div class="rest-info"><h4>&#x062A;&#x0627;&#x0643;&#x0648; &#x062A;&#x0627;&#x064A;&#x0645;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.5</span><span>25-35 &#x062F;&#x0642;</span><span class="tag">&#x0645;&#x062C;&#x0627;&#x0646;&#x064A;</span></div></div></div>
+      <div class="rest food-card" data-r="&#x062F;&#x064A;&#x0644;&#x0627;&#x064A;&#x062A; &#x0634;&#x064A;&#x0643;&#x0646;" data-e="&#x1F357;" data-p="550" data-d="&#x062F;&#x062C;&#x0627;&#x062C; &#x0643;&#x0631;&#x0633;&#x0628;&#x064A; + &#x0628;&#x0637;&#x0627;&#x0637;&#x0633;" data-t="20-30"><div class="rest-img">&#x1F357;</div><div class="rest-info"><h4>&#x062F;&#x064A;&#x0644;&#x0627;&#x064A;&#x062A; &#x0634;&#x064A;&#x0643;&#x0646;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.9</span><span>20-30 &#x062F;&#x0642;</span><span class="tag">&#x0645;&#x062C;&#x0627;&#x0646;&#x064A;</span></div></div></div>
+      <div class="rest food-card" data-r="&#x0645;&#x0637;&#x0639;&#x0645; &#x0627;&#x0644;&#x0623;&#x0635;&#x064A;&#x0644;" data-e="&#x1F372;" data-p="720" data-d="&#x0643;&#x0633;&#x0643;&#x0633;&#x064A; &#x062C;&#x0632;&#x0627;&#x0626;&#x0631;&#x064A;" data-t="35-45"><div class="rest-img">&#x1F372;</div><div class="rest-info"><h4>&#x0645;&#x0637;&#x0639;&#x0645; &#x0627;&#x0644;&#x0623;&#x0635;&#x064A;&#x0644;</h4><div class="rest-meta"><span class="star">&#x2B50; 4.9</span><span>35-45 &#x062F;&#x0642;</span><span class="tag">&#x0645;&#x062C;&#x0627;&#x0646;&#x064A;</span></div></div></div>
+    </div>
+  </div>
+  <div style="height:28px"></div>
+</div>
+
+<!-- GROCERY -->
+<div id="p4" class="page">
+  <div class="sbar" style="background:linear-gradient(135deg,#7b5ea7,#6b46c1)"><span>9:41</span><span>&#x1F4F6;</span></div>
+  <div style="background:linear-gradient(135deg,#7b5ea7,#6b46c1);padding:8px 18px 33px;position:relative">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <button id="b4" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer">&#x2190;</button>
+      <h2 style="color:#fff;font-size:17px;font-weight:800;margin:0">Omar Market &#x1F6D2;</h2>
+      <div style="width:34px"></div>
+    </div>
+    <p style="color:rgba(255,255,255,.8);font-size:12px">&#x062A;&#x0648;&#x0635;&#x064A;&#x0644; &#x062E;&#x0644;&#x0627;&#x0644; 45 &#x062F;&#x0642;&#x064A;&#x0642;&#x0629;</p>
+    <div style="position:absolute;bottom:-1px;left:0;right:0;height:28px;background:#f5f7fa;border-radius:28px 28px 0 0"></div>
+  </div>
+  <div class="sec" style="padding-top:18px">
+    <div class="sh"><h3>&#x0645;&#x0646;&#x062A;&#x062C;&#x0627;&#x062A; &#x0645;&#x0645;&#x064A;&#x0632;&#x0629;</h3></div>
+    <div class="groc-g">
+      <div class="groc-c" data-prod="&#x062D;&#x0644;&#x064A;&#x0628; &#x0646;&#x064A;&#x062F;&#x0648;" data-emoji="&#x1F95B;" data-price="580"><div class="gi">&#x1F95B;</div><h4>&#x062D;&#x0644;&#x064A;&#x0628; &#x0646;&#x064A;&#x062F;&#x0648;</h4><p>900g</p><div class="gp">580 &#x062F;.&#x062C;</div><button class="add-btn">+</button></div>
+      <div class="groc-c" data-prod="&#x0632;&#x064A;&#x062A; &#x0632;&#x064A;&#x062A;&#x0648;&#x0646;" data-emoji="&#x1FAD2;" data-price="950"><div class="gi">&#x1FAD2;</div><h4>&#x0632;&#x064A;&#x062A; &#x0632;&#x064A;&#x062A;&#x0648;&#x0646;</h4><p>1L &#x0628;&#x0643;&#x0631;</p><div class="gp">950 &#x062F;.&#x062C;</div><button class="add-btn">+</button></div>
+      <div class="groc-c" data-prod="&#x0637;&#x0645;&#x0627;&#x0637;&#x0645; 1kg" data-emoji="&#x1F345;" data-price="180"><div class="gi">&#x1F345;</div><h4>&#x0637;&#x0645;&#x0627;&#x0637;&#x0645;</h4><p>1kg &#x0645;&#x062D;&#x0644;&#x064A;</p><div class="gp">180 &#x062F;.&#x062C;</div><button class="add-btn">+</button></div>
+      <div class="groc-c" data-prod="&#x0634;&#x0627;&#x064A; &#x0644;&#x064A;&#x0628;&#x062A;&#x0648;&#x0646;" data-emoji="&#x1F375;" data-price="420"><div class="gi">&#x1F375;</div><h4>&#x0634;&#x0627;&#x064A; &#x0644;&#x064A;&#x0628;&#x062A;&#x0648;&#x0646;</h4><p>100 &#x0643;&#x064A;&#x0633;</p><div class="gp">420 &#x062F;.&#x062C;</div><button class="add-btn">+</button></div>
+      <div class="groc-c" data-prod="&#x062E;&#x0628;&#x0632; &#x062A;&#x0642;&#x0644;&#x064A;&#x062F;&#x064A;" data-emoji="&#x1F35E;" data-price="80"><div class="gi">&#x1F35E;</div><h4>&#x062E;&#x0628;&#x0632;</h4><p>&#x0637;&#x0627;&#x0632;&#x062C; &#x064A;&#x0648;&#x0645;&#x064A;</p><div class="gp">80 &#x062F;.&#x062C;</div><button class="add-btn">+</button></div>
+      <div class="groc-c" data-prod="&#x062F;&#x062C;&#x0627;&#x062C; &#x0637;&#x0627;&#x0632;&#x062C; 1kg" data-emoji="&#x1F357;" data-price="520"><div class="gi">&#x1F357;</div><h4>&#x062F;&#x062C;&#x0627;&#x062C;</h4><p>1kg &#x0637;&#x0627;&#x0632;&#x062C;</p><div class="gp">520 &#x062F;.&#x062C;</div><button class="add-btn">+</button></div>
+    </div>
+  </div>
+  <div style="height:28px"></div>
+</div>
+
+<!-- WALLET -->
+<div id="p5" class="page">
+  <div class="sbar" style="background:linear-gradient(135deg,#7b5ea7,#6b46c1)"><span>9:41</span><span>&#x1F4F6;</span></div>
+  <div class="wal-h" style="padding-top:8px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <button id="b5" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer">&#x2190;</button>
+      <span style="color:#fff;font-weight:800;font-size:15px">Omar Pay &#x1F4B3;</span>
+      <div style="width:34px"></div>
+    </div>
+    <div class="wal-bal"><p>&#x0631;&#x0635;&#x064A;&#x062F;&#x0643;</p><h2>12,450</h2><small>&#x062F;&#x064A;&#x0646;&#x0627;&#x0631; &#x062C;&#x0632;&#x0627;&#x0626;&#x0631;&#x064A;</small></div>
+  </div>
+  <div class="wal-acts">
+    <button class="wact"><div class="wic" style="background:rgba(0,200,150,.12)">&#x2795;</div><span>&#x0625;&#x064A;&#x062F;&#x0627;&#x0639;</span></button>
+    <button class="wact"><div class="wic" style="background:rgba(123,94,167,.12)">&#x2197;&#xFE0F;</div><span>&#x062A;&#x062D;&#x0648;&#x064A;&#x0644;</span></button>
+    <button class="wact"><div class="wic" style="background:rgba(255,107,53,.12)">&#x1F381;</div><span>&#x0643;&#x0648;&#x062F;</span></button>
+    <button class="wact"><div class="wic" style="background:rgba(245,166,35,.12)">&#x1F4CA;</div><span>&#x062A;&#x0627;&#x0631;&#x064A;&#x062E;</span></button>
+  </div>
+  <div class="tx-list">
+    <div class="sh" style="margin-bottom:12px"><h3>&#x0622;&#x062E;&#x0631; &#x0627;&#x0644;&#x0645;&#x0639;&#x0627;&#x0645;&#x0644;&#x0627;&#x062A;</h3></div>
+    <div class="tx"><div class="txic" style="background:rgba(255,107,53,.1)">&#x1F354;</div><div class="txi"><h4>&#x0628;&#x0631;&#x063A;&#x0631; &#x0641;&#x0627;&#x0643;&#x062A;&#x0648;&#x0631;&#x064A;</h4><p>&#x0627;&#x0644;&#x064A;&#x0648;&#x0645;&#x060C; 12:30</p></div><span class="txa d">-850 &#x062F;.&#x062C;</span></div>
+    <div class="tx"><div class="txic" style="background:rgba(0,200,150,.1)">&#x2795;</div><div class="txi"><h4>&#x0625;&#x064A;&#x062F;&#x0627;&#x0639; &#x0631;&#x0635;&#x064A;&#x062F;</h4><p>&#x0623;&#x0645;&#x0633;&#x060C; 09:15</p></div><span class="txa c">+5,000 &#x062F;.&#x062C;</span></div>
+    <div class="tx"><div class="txic" style="background:rgba(0,200,150,.1)">&#x1F697;</div><div class="txi"><h4>&#x0631;&#x062D;&#x0644;&#x0629; &#x0643;&#x0644;&#x0627;&#x0633;&#x064A;&#x0643;</h4><p>&#x0623;&#x0645;&#x0633;&#x060C; 18:45</p></div><span class="txa d">-320 &#x062F;.&#x062C;</span></div>
+    <div class="tx"><div class="txic" style="background:rgba(245,166,35,.1)">&#x1F381;</div><div class="txi"><h4>&#x0643;&#x0648;&#x062F; &#x062A;&#x0631;&#x0648;&#x064A;&#x062C;&#x064A;</h4><p>&#x0627;&#x0644;&#x062B;&#x0644;&#x0627;&#x062B;&#x0627;&#x0621;</p></div><span class="txa c">+200 &#x062F;.&#x062C;</span></div>
+  </div>
+  <div style="height:28px"></div>
+</div>
+
+<!-- PROFILE -->
+<div id="p6" class="page">
+  <div class="sbar" style="background:linear-gradient(145deg,#1a1a2e,#16213e)"><span>9:41</span><span>&#x1F4F6;</span></div>
+  <div class="pro-h" style="padding-top:8px">
+    <button id="b6" style="position:absolute;top:12px;right:16px;background:rgba(255,255,255,.1);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:15px;cursor:pointer">&#x2190;</button>
+    <div class="av">&#x1F468;</div><h2>&#x0639;&#x0645;&#x0631;</h2><p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dcb3b1bdaea8b8bae5e9ed9cbbb1bdb5b0f2bfb3b1">[email&#160;protected]</a></p>
+    <div class="pro-stats">
+      <div class="pst"><h3>48</h3><p>&#x0631;&#x062D;&#x0644;&#x0629;</p></div>
+      <div class="pst"><h3>&#x2B50;4.9</h3><p>&#x062A;&#x0642;&#x064A;&#x064A;&#x0645;</p></div>
+      <div class="pst"><h3>12K</h3><p>&#x0631;&#x0635;&#x064A;&#x062F;</p></div>
+    </div>
+  </div>
+  <div class="m-list" style="padding-bottom:28px">
+    <div class="mi"><div class="mic" style="background:rgba(0,200,150,.12)">&#x1F464;</div><div class="mii"><h4>&#x0627;&#x0644;&#x0645;&#x0644;&#x0641; &#x0627;&#x0644;&#x0634;&#x062E;&#x0635;&#x064A;</h4><p>&#x062A;&#x0639;&#x062F;&#x064A;&#x0644; &#x0645;&#x0639;&#x0644;&#x0648;&#x0645;&#x0627;&#x062A;&#x0643;</p></div><span style="color:#8a93a8">&#x203A;</span></div>
+    <div class="mi"><div class="mic" style="background:rgba(123,94,167,.12)">&#x1F5FA;&#xFE0F;</div><div class="mii"><h4>&#x0631;&#x062D;&#x0644;&#x0627;&#x062A;&#x064A;</h4><p>&#x0633;&#x062C;&#x0644; &#x0643;&#x0644; &#x0627;&#x0644;&#x0631;&#x062D;&#x0644;&#x0627;&#x062A;</p></div><span style="color:#8a93a8">&#x203A;</span></div>
+    <div class="ctcard">
+      <p style="color:rgba(255,255,255,.55);font-size:11px;margin-bottom:11px;text-align:center">&#x1F4DE; &#x062A;&#x0648;&#x0627;&#x0635;&#x0644; &#x0645;&#x0639; Omar.services</p>
+      <a href="tel:0676290488" class="ctlink" style="background:rgba(0,200,150,.15);border-color:rgba(0,200,150,.2)"><div class="ctlico" style="background:rgba(0,200,150,.2)">&#x1F4F1;</div><div class="ctlb"><strong>0676 290 488</strong><small>&#x0627;&#x062A;&#x0635;&#x0644; &#x0645;&#x0628;&#x0627;&#x0634;&#x0631;&#x0629;</small></div><span style="color:#00c896;margin-right:auto">&#x203A;</span></a>
+      <a href="/cdn-cgi/l/email-protection#721d1f13000616144b474332151f131b1e5c111d1f" class="ctlink" style="background:rgba(255,107,53,.12);border-color:rgba(255,107,53,.2)"><div class="ctlico" style="background:rgba(255,107,53,.2)">&#x2709;&#xFE0F;</div><div class="ctlb"><strong><span class="__cf_email__" data-cfemail="2b44464a595f4f4d121e1a6b4c464a424705484446">[email&#160;protected]</span></strong><small>&#x0631;&#x0627;&#x0633;&#x0644;&#x0646;&#x0627;</small></div><span style="color:#ff6b35;margin-right:auto">&#x203A;</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- BOOK MODAL -->
+<div class="modal" id="m1">
+  <div class="mpanel">
+    <div class="mbar"></div>
+    <div id="searching"><h3 style="text-align:center;font-size:16px;font-weight:800;margin-bottom:4px">&#x1F50D; &#x062C;&#x0627;&#x0631;&#x064A; &#x0627;&#x0644;&#x0628;&#x062D;&#x062B;...</h3><div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
+    <div id="driver-found" style="display:none">
+      <div class="drv"><div class="drv-av">&#x1F468;&#x200D;&#x2708;&#xFE0F;</div><div class="drv-info"><h4>&#x0643;&#x0645;&#x0627;&#x0644; &#x0628;&#x0648;&#x0639;&#x0644;&#x0627;&#x0645;</h4><div class="drv-star">&#x2B50; 4.9 &bull; 312 &#x0631;&#x062D;&#x0644;&#x0629;</div><p style="font-size:10px;color:#8a93a8">&#x062A;&#x0648;&#x064A;&#x0648;&#x062A;&#x0627;</p></div><div class="dplate">16-ABC</div></div>
+      <div class="eta"><span style="font-size:12px;color:#8a93a8">&#x23F1; &#x0648;&#x0642;&#x062A; &#x0627;&#x0644;&#x0648;&#x0635;&#x0648;&#x0644;</span><span style="font-size:19px;font-weight:900;color:#00c896">4 &#x062F;&#x0642;&#x0627;&#x0626;&#x0642;</span></div>
+      <div id="rnbox" class="nbox"></div>
+      <button class="btn-g" id="track-go" style="margin-bottom:9px">&#x1F4F1; &#x062A;&#x062A;&#x0628;&#x0639; &#x0627;&#x0644;&#x0631;&#x062D;&#x0644;&#x0629;</button>
+    </div>
+    <button class="btn-w" id="cancel-r">&#x0625;&#x0644;&#x063A;&#x0627;&#x0621;</button>
+  </div>
+</div>
+
+<!-- FOOD MODAL -->
+<div class="modal" id="m2">
+  <div class="mpanel">
+    <div class="mbar"></div>
+    <h3 style="font-size:16px;font-weight:800;margin-bottom:13px">&#x062A;&#x0623;&#x0643;&#x064A;&#x062F; &#x0637;&#x0644;&#x0628;&#x0643; &#x1F37D;&#xFE0F;</h3>
+    <div class="oprev"><div class="oe" id="fe"></div><div><h4 id="fn"></h4><p id="fd"></p><div class="op" id="fp"></div></div></div>
+    <div class="form">
+      <label>&#x1F464; &#x0627;&#x0633;&#x0645;&#x0643;</label><input id="fcn" placeholder="&#x0645;&#x062D;&#x0645;&#x062F; &#x0623;&#x0645;&#x064A;&#x0646;">
+      <label>&#x1F4F1; &#x0647;&#x0627;&#x062A;&#x0641;&#x0643;</label><input id="fcp" type="tel" placeholder="0661234567">
+      <label>&#x1F4CD; &#x0639;&#x0646;&#x0648;&#x0627;&#x0646; &#x0627;&#x0644;&#x062A;&#x0648;&#x0635;&#x064A;&#x0644;</label><input id="fca" placeholder="&#x0634;&#x0627;&#x0631;&#x0639; &#x062F;&#x064A;&#x062F;&#x0648;&#x0634; &#x0645;&#x0631;&#x0627;&#x062F;">
+      <label>&#x1F4B3; &#x0637;&#x0631;&#x064A;&#x0642;&#x0629; &#x0627;&#x0644;&#x062F;&#x0641;&#x0639;</label>
+      <select id="fpy"><option>&#x0646;&#x0642;&#x062F;&#x064B;&#x0627; &#x0639;&#x0646;&#x062F; &#x0627;&#x0644;&#x062A;&#x0633;&#x0644;&#x064A;&#x0645;</option><option>&#x0645;&#x062D;&#x0641;&#x0638;&#x0629; Omar Pay</option><option>&#x0628;&#x0637;&#x0627;&#x0642;&#x0629; &#x0628;&#x0646;&#x0643;&#x064A;&#x0629;</option></select>
+    </div>
+    <div id="fnbox" class="nbox"></div>
+    <button class="btn-g" id="food-go">&#x2705; &#x062A;&#x0623;&#x0643;&#x064A;&#x062F; &#x0627;&#x0644;&#x0637;&#x0644;&#x0628;</button>
+    <button class="btn-w" id="food-cl">&#x0625;&#x0644;&#x063A;&#x0627;&#x0621;</button>
+  </div>
+</div>
+
+<!-- GROC MODAL -->
+<div class="modal" id="m3">
+  <div class="mpanel">
+    <div class="mbar"></div>
+    <h3 style="font-size:16px;font-weight:800;margin-bottom:13px">&#x0637;&#x0644;&#x0628; &#x0645;&#x0646;&#x062A;&#x062C; &#x1F6D2;</h3>
+    <div class="oprev"><div class="oe" id="ge"></div><div><h4 id="gn"></h4><div class="op" id="gp"></div></div></div>
+    <div class="form">
+      <label>&#x1F464; &#x0627;&#x0633;&#x0645;&#x0643;</label><input id="gcn" placeholder="&#x0645;&#x062D;&#x0645;&#x062F; &#x0623;&#x0645;&#x064A;&#x0646;">
+      <label>&#x1F4F1; &#x0647;&#x0627;&#x062A;&#x0641;&#x0643;</label><input id="gcp" type="tel" placeholder="0661234567">
+      <label>&#x1F4CD; &#x0639;&#x0646;&#x0648;&#x0627;&#x0646; &#x0627;&#x0644;&#x062A;&#x0648;&#x0635;&#x064A;&#x0644;</label><input id="gca" placeholder="&#x0634;&#x0627;&#x0631;&#x0639; 1 &#x0646;&#x0648;&#x0641;&#x0645;&#x0628;&#x0631;">
+      <label>&#x1F522; &#x0627;&#x0644;&#x0643;&#x0645;&#x064A;&#x0629;</label>
+      <select id="gqt"><option>1 &#x0642;&#x0637;&#x0639;&#x0629;</option><option>2 &#x0642;&#x0637;&#x0639;&#x0629;</option><option>3 &#x0642;&#x0637;&#x0639;</option><option>5 &#x0642;&#x0637;&#x0639;</option><option>10 &#x0642;&#x0637;&#x0639;</option></select>
+    </div>
+    <div id="gnbox" class="nbox"></div>
+    <button class="btn-g" id="groc-go">&#x2705; &#x062A;&#x0623;&#x0643;&#x064A;&#x062F; &#x0627;&#x0644;&#x0637;&#x0644;&#x0628;</button>
+    <button class="btn-w" id="groc-cl">&#x0625;&#x0644;&#x063A;&#x0627;&#x0621;</button>
+  </div>
+</div>
+
+<div class="toast" id="tst"></div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+var KEY='ca081e36-6570-495a-af2e-ba32551cca55';
+var OWN='omartdf951@gmail.com';
+var PHN='0676290488';
+var CF={r:'',e:'',p:'',d:'',t:''};
+var CG={prod:'',emoji:'',price:''};
+
+function g(i){return document.getElementById(i);}
+function gv(i){var e=g(i);return e?e.value.trim():'';}
+function tx(i,v){var e=g(i);if(e)e.textContent=v;}
+
+function show(id){
+  var pages=document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++) pages[i].classList.remove('on');
+  g(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function nav(idx){
+  var nis=document.querySelectorAll('.ni');
+  for(var i=0;i<nis.length;i++) nis[i].classList.toggle('on',i===idx);
+}
+
+function closeM(){
+  var modals=document.querySelectorAll('.modal');
+  for(var i=0;i<modals.length;i++) modals[i].classList.remove('on');
+}
+
+function toast(msg,t){
+  var el=g('tst');
+  el.textContent=msg;
+  el.className='toast'+(t?' '+t:'');
+  el.classList.add('on');
+  setTimeout(function(){el.classList.remove('on');},3000);
+}
+
+function sendMail(boxId,subj,body,cb){
+  var box=g(boxId);
+  box.innerHTML='<div class="nrow snd">Sending...</div>';
+  var fd=new FormData();
+  fd.append('access_key',KEY);
+  fd.append('subject',subj);
+  fd.append('from_name','Omar.services');
+  fd.append('message',body);
+  fetch('https://api.web3forms.com/submit',{method:'POST',body:fd})
+  .then(function(r){return r.json();})
+  .then(function(d){
+    if(d.success){
+      box.innerHTML='<div class="nrow ok">Sent to: '+OWN+'</div>';
+    } else {
+      box.innerHTML='<div class="nrow fail">Error: '+(d.message||'failed')+'</div>';
+    }
+    if(cb) cb();
+  })
+  .catch(function(e){
+    box.innerHTML='<div class="nrow fail">Network error</div>';
+    if(cb) cb();
+  });
+}
+
+window.addEventListener('load',function(){
+
+  g('s0').addEventListener('click',function(){show('p1');});
+  setTimeout(function(){show('p1');},1800);
+
+  g('n0').addEventListener('click',function(){show('p1');nav(0);});
+  g('n1').addEventListener('click',function(){show('p2');nav(1);});
+  g('n2').addEventListener('click',function(){show('p3');nav(2);});
+  g('n3').addEventListener('click',function(){show('p5');nav(3);});
+  g('n4').addEventListener('click',function(){show('p6');nav(4);});
+
+  g('h-ride').addEventListener('click',function(){show('p2');nav(1);});
+  g('h-ride2').addEventListener('click',function(){show('p2');nav(1);});
+  g('h-food').addEventListener('click',function(){show('p3');nav(2);});
+  g('h-food2').addEventListener('click',function(){show('p3');nav(2);});
+  g('h-groc').addEventListener('click',function(){show('p4');});
+  g('h-wal').addEventListener('click',function(){show('p5');nav(3);});
+
+  g('b2').addEventListener('click',function(){show('p1');nav(0);});
+  g('b3').addEventListener('click',function(){show('p1');nav(0);});
+  g('b4').addEventListener('click',function(){show('p1');nav(0);});
+  g('b5').addEventListener('click',function(){show('p1');nav(0);});
+  g('b6').addEventListener('click',function(){show('p1');nav(0);});
+
+  var rtOpts=document.querySelectorAll('#rt-g .ride-opt');
+  for(var i=0;i<rtOpts.length;i++){
+    (function(el){
+      el.addEventListener('click',function(){
+        for(var j=0;j<rtOpts.length;j++) rtOpts[j].classList.remove('sel');
+        el.classList.add('sel');
+      });
+    })(rtOpts[i]);
+  }
+
+  var pyOpts=document.querySelectorAll('#py-g .pay-o');
+  for(var i=0;i<pyOpts.length;i++){
+    (function(el){
+      el.addEventListener('click',function(){
+        for(var j=0;j<pyOpts.length;j++) pyOpts[j].classList.remove('sel');
+        el.classList.add('sel');
+      });
+    })(pyOpts[i]);
+  }
+
+  g('ride-go').addEventListener('click',function(){
+    var n=gv('rn'),p=gv('rp'),f=gv('rf'),t=gv('rt');
+    if(!n||!p||!f||!t){toast('Please fill all fields','err');return;}
+    var rc=document.querySelector('#rt-g .ride-opt.sel');
+    var ty=rc?rc.getAttribute('data-t'):'Classic';
+    var pr=rc?rc.getAttribute('data-p'):'200';
+    var pc=document.querySelector('#py-g .pay-o.sel');
+    var py=pc?pc.getAttribute('data-v'):'Cash';
+    var now=new Date().toLocaleString();
+    g('m1').classList.add('on');
+    g('searching').style.display='block';
+    g('driver-found').style.display='none';
+    g('rnbox').innerHTML='';
+    g('ride-go').disabled=true;
+    setTimeout(function(){
+      g('searching').style.display='none';
+      g('driver-found').style.display='block';
+      var body='RIDE - Omar.services
+'+now+'
+Client: '+n+'
+Phone: '+p+'
+From: '+f+'
+To: '+t+'
+Car: '+ty+'
+Price: '+pr+' DZD
+Payment: '+py+'
+Owner tel: '+PHN;
+      sendMail('rnbox','New Ride: '+n,body,function(){
+        g('ride-go').disabled=false;
+      });
+    },2500);
+  });
+
+  g('track-go').addEventListener('click',function(){closeM();toast('Driver on the way!','ok');});
+  g('cancel-r').addEventListener('click',closeM);
+
+  var fcards=document.querySelectorAll('.food-card');
+  for(var i=0;i<fcards.length;i++){
+    (function(card){
+      card.addEventListener('click',function(){
+        CF.r=card.getAttribute('data-r');
+        CF.e=card.getAttribute('data-e');
+        CF.p=card.getAttribute('data-p');
+        CF.d=card.getAttribute('data-d');
+        CF.t=card.getAttribute('data-t');
+        tx('fe',CF.e);tx('fn',CF.r);
+        tx('fd',CF.d);tx('fp',CF.p+' DZD');
+        g('fnbox').innerHTML='';
+        g('fcn').value='';g('fcp').value='';g('fca').value='';
+        g('m2').classList.add('on');
+      });
+    })(fcards[i]);
+  }
+
+  g('food-go').addEventListener('click',function(){
+    var n=gv('fcn'),p=gv('fcp'),a=gv('fca');
+    var py=g('fpy').value;
+    if(!n||!p||!a){toast('Please fill all fields','err');return;}
+    var btn=g('food-go');
+    btn.disabled=true;btn.textContent='...';
+    var now=new Date().toLocaleString();
+    var body='FOOD - Omar.services
+'+now+'
+Client: '+n+'
+Phone: '+p+'
+Restaurant: '+CF.r+'
+Order: '+CF.d+'
+Price: '+CF.p+' DZD
+Address: '+a+'
+Payment: '+py+'
+Owner tel: '+PHN;
+    sendMail('fnbox','Food: '+CF.r+' - '+n,body,function(){
+      btn.textContent='Confirmed';btn.disabled=false;
+      toast('Order confirmed!','ok');
+    });
+  });
+  g('food-cl').addEventListener('click',closeM);
+
+  var gcards=document.querySelectorAll('.groc-c');
+  for(var i=0;i<gcards.length;i++){
+    (function(card){
+      card.addEventListener('click',function(){
+        CG.prod=card.getAttribute('data-prod');
+        CG.emoji=card.getAttribute('data-emoji');
+        CG.price=card.getAttribute('data-price');
+        tx('ge',CG.emoji);tx('gn',CG.prod);
+        tx('gp',CG.price+' DZD');
+        g('gnbox').innerHTML='';
+        g('gcn').value='';g('gcp').value='';g('gca').value='';
+        g('m3').classList.add('on');
+      });
+    })(gcards[i]);
+  }
+
+  g('groc-go').addEventListener('click',function(){
+    var n=gv('gcn'),p=gv('gcp'),a=gv('gca');
+    var q=g('gqt').value;
+    if(!n||!p||!a){toast('Please fill all fields','err');return;}
+    var btn=g('groc-go');
+    btn.disabled=true;btn.textContent='...';
+    var qn=parseInt(q);
+    var tot=qn*parseInt(CG.price);
+    var now=new Date().toLocaleString();
+    var body='GROCERY - Omar.services
+'+now+'
+Client: '+n+'
+Phone: '+p+'
+Product: '+CG.prod+'
+Qty: '+q+'
+Total: '+tot+' DZD
+Address: '+
